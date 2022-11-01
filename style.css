@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+
+
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cell-style {
+    width: 25%;
+    height: 25vh;
+    border: 2px solid black;
+}
+.cell-style:hover {
+    background-color: blue;
+}
+
+.trail { /* className for the trail elements */
+    position: absolute;
+    height: 6px; width: 6px;
+    background: red;
+  }
