@@ -1,78 +1,39 @@
-let gridContainer = document.querySelector('.grid-container');
-let button = document.querySelector('button');
+let grid = document.querySelector('.container');
+let resetBtn = document.querySelector('.grid-size');
 
 
-// grid 
-function createGrid(squares) {
-for (let i = 0; i < squares; i++) {
-        let cell = document.createElement('div');
-        cell.className = 'cell-style';
-        gridContainer.appendChild(cell);
-    };
-};
-
-createGrid(64);
-
-
-  // mouse trail 
-    /*let dots = [];
-    for (let i = 0; i < 2000; i++) {
-      let node = document.createElement("div");
-      node.className = "trail";
-      document.body.appendChild(node);
-      dots.push(node);
-    }
-    let currentDot = 0;
-
-   document.addEventListener('mousemove', event => {
-     
-   }) */
-   
-   let dots = [];
-
-   let currentDot = 0;
-
-   for (let i = 0; i < 1000; i++) {
-     let node = document.createElement('div');
-     node.className = 'trail';
-     document.body.appendChild(node);
-     dots.push(node);
-     
-   };
-
-     
+function createGrid(rows, cols) {
+  grid.style.setProperty('--grid-rows', rows);
+  grid.style.setProperty('--grid-cols', cols);
+     for (let i = 0; i < (rows * cols); i++) {
+        let div = document.createElement('div');
+        div.classList.add('cell');
   
+        div.addEventListener('mouseover', function(event) {
+            event.target.style.backgroundColor = 'black';
+        })
 
-   gridContainer.addEventListener('mousemove', event => {
-    let dot = dots[currentDot];  
-    dot.style.left = (event.pageX - 2) + "px";
-    dot.style.top = (event.pageY - 2) + "px";
-    
+       grid.appendChild(div);
+     }
+}
 
-    currentDot = (currentDot + 1) % dots.length;
-       
-     });
+// use this solution for grid https://stackoverflow.com/questions/57550082/creating-a-16x16-grid-using-javascript
 
-     button.addEventListener('click', () => {
-      let askSquares = prompt('How big?', '');
-       if (askSquares > 100) {
-         let text = document.createElement('p');
-         text.textContent = 'Sorry can\'t do that';
-         text.className = 'text-refuse';
-         document.body.appendChild(text);
-
-      
-         setTimeout(() => {           
-          text.style.display = 'none';
+function resetGrid() {
+  grid.innerHTML = ''; 
   
-        }, 2000); 
+  let pickNumber = prompt('Enter a number for your grid size', '');
+  if (pickNumber > 100) {
+    alert('Number is not valid'); 
+    prompt('Pick another number', ''); 
+  }
+  pickNumber = Number(pickNumber); 
+  grid.style.setProperty('--grid-rows', pickNumber);
+  grid.style.setProperty('--grid-cols', pickNumber);
+  createGrid(pickNumber, pickNumber); 
+} 
 
-       } else if (askSquares < 100) {
-       createGrid(askSquares);
-     
-       }
-      }
-     );
+resetBtn.addEventListener('click', resetGrid);
 
 
-     
+createGrid(16, 16);
